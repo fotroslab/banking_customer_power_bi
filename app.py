@@ -769,6 +769,10 @@ def style_fig(
 
 @st.cache_data(show_spinner=False)
 def load_data() -> dict[str, Any]:
+    if not (PROCESSED_DIR / "fact_snapshot.csv").exists():
+        from scripts.build_data import main as build_data_main
+        build_data_main()
+
     dim_customer = pd.read_csv(PROCESSED_DIR / "dim_customer.csv")
     dim_branch = pd.read_csv(PROCESSED_DIR / "dim_branch.csv")
     dim_product = pd.read_csv(PROCESSED_DIR / "dim_product.csv")
