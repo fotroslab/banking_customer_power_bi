@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="Vazirmatn FD, Vazirmatn, Tahoma, Segoe UI, sans-serif">
+  <defs>
+    <style>
+      .bg { fill: #f7faf7; }
+      .header-bar { fill: #0b6e4f; }
+      .title-text { fill: #ffffff; font-size: 20px; font-weight: bold; }
+      .subtitle-text { fill: #e2f2eb; font-size: 13px; }
+      .dim-box { fill: #ffffff; stroke: #0b6e4f; stroke-width: 2.2; rx: 10; }
+      .dim-hdr { fill: #0b6e4f; rx: 8; }
+      .fact-box { fill: #fffdf7; stroke: #d4a017; stroke-width: 2.6; rx: 10; }
+      .fact-hdr { fill: #b8860b; rx: 8; }
+      .tbl-title { fill: #ffffff; font-size: 14px; font-weight: bold; }
+      .tbl-sub { fill: #eef7f3; font-size: 11px; }
+      .col-pk { fill: #074d37; font-size: 12px; font-weight: bold; }
+      .col-fk { fill: #8a5a00; font-size: 12px; font-weight: bold; }
+      .col-reg { fill: #1f362d; font-size: 12px; }
+      .rel-line { stroke: #0b6e4f; stroke-width: 2.2; fill: none; }
+      .rel-line-inactive { stroke: #6c8ebf; stroke-width: 2; stroke-dasharray: 6,4; fill: none; }
+      .card-badge { fill: #e6f3ee; stroke: #0b6e4f; stroke-width: 1.2; rx: 4; }
+      .card-text { fill: #074d37; font-size: 11px; font-weight: bold; }
+      .legend-box { fill: #ffffff; stroke: #cfe0d6; stroke-width: 1.5; rx: 8; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0b6e4f"/>
+    </marker>
+    <marker id="arrow-inactive" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#6c8ebf"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" x="0" y="0" width="1200" height="760"/>
+
+  <!-- Top Banner -->
+  <rect class="header-bar" x="20" y="16" width="1160" height="64" rx="12"/>
+  <text class="title-text" x="1155" y="44" text-anchor="end">مدل داده ستاره‌ای (Star Schema) — بانک آریا: نمای ۳۶۰ درجه مشتری و تحلیل ریزش</text>
+  <text class="subtitle-text" x="1155" y="66" text-anchor="end">۴ جدول بُعد (Dimension) و ۲ جدول فکت (Fact) | جهت فیلتر یک‌طرفه (۱ → *) از ابعاد به فکت | تاریخ مرجع: ۱۴۰۳/۱۲/۲۹</text>
+
+  <!-- Relationship Lines -->
+  <!-- dim_customer -> fact_snapshot -->
+  <path class="rel-line" d="M 330 220 L 455 220" marker-end="url(#arrow)"/>
+  <text class="card-text" x="342" y="212">1</text>
+  <text class="card-text" x="440" y="212">*</text>
+
+  <!-- dim_customer -> fact_product_holding -->
+  <path class="rel-line" d="M 330 290 L 390 290 L 390 525 L 455 525" marker-end="url(#arrow)"/>
+  <text class="card-text" x="342" y="283">1</text>
+  <text class="card-text" x="440" y="518">*</text>
+
+  <!-- dim_date -> fact_snapshot (Active: snapshot_date_jalali) -->
+  <path class="rel-line" d="M 870 210 L 745 210" marker-end="url(#arrow)"/>
+  <text class="card-text" x="855" y="202">1</text>
+  <text class="card-text" x="756" y="202">*</text>
+
+  <!-- dim_date -> fact_snapshot (Inactive Role-Playing: acquisition_jalali) -->
+  <path class="rel-line-inactive" d="M 870 245 L 745 245" marker-end="url(#arrow-inactive)"/>
+  <text class="card-text" x="810" y="262" text-anchor="middle" fill="#4b6b94">نقش‌گذاری (USERELATIONSHIP)</text>
+
+  <!-- dim_date -> fact_product_holding (opened_date_jalali) -->
+  <path class="rel-line" d="M 870 300 L 810 300 L 810 515 L 745 515" marker-end="url(#arrow)"/>
+  <text class="card-text" x="855" y="293">1</text>
+  <text class="card-text" x="756" y="508">*</text>
+
+  <!-- dim_branch -> fact_snapshot -->
+  <path class="rel-line" d="M 330 490 L 365 490 L 365 320 L 455 320" marker-end="url(#arrow)"/>
+  <text class="card-text" x="342" y="483">1</text>
+  <text class="card-text" x="440" y="313">*</text>
+
+  <!-- dim_branch -> fact_product_holding -->
+  <path class="rel-line" d="M 330 560 L 455 560" marker-end="url(#arrow)"/>
+  <text class="card-text" x="342" y="553">1</text>
+  <text class="card-text" x="440" y="553">*</text>
+
+  <!-- dim_product -> fact_product_holding -->
+  <path class="rel-line" d="M 870 560 L 745 560" marker-end="url(#arrow)"/>
+  <text class="card-text" x="855" y="553">1</text>
+  <text class="card-text" x="756" y="553">*</text>
+
+  <!-- TABLE 1: dim_customer (Top Left) -->
+  <g transform="translate(40, 110)">
+    <rect class="dim-box" x="0" y="0" width="290" height="270"/>
+    <rect class="dim-hdr" x="0" y="0" width="290" height="46"/>
+    <text class="tbl-title" x="145" y="22" text-anchor="middle">dim_customer (بُعد مشتری)</text>
+    <text class="tbl-sub" x="145" y="39" text-anchor="middle">۱۰٬۰۰۰ ردیف | ۱ ردیف به‌ازای هر مشتری</text>
+    <text class="col-pk" x="14" y="68">🔑 PK: customer_id (CustomerId)</text>
+    <text class="col-reg" x="14" y="90">• full_name_fa (نام فارسی ساختگی)</text>
+    <text class="col-reg" x="14" y="110">• original_surname (نام خانوادگی منبع)</text>
+    <text class="col-reg" x="14" y="130">• gender (زن / مرد) | age | age_group</text>
+    <text class="col-reg" x="14" y="150">• province (تهران / اصفهان / خراسان رضوی)</text>
+    <text class="col-reg" x="14" y="170">• source_geography (France/Germany/Spain)</text>
+    <text class="col-reg" x="14" y="190">• tenure_years | tenure_group</text>
+    <text class="col-reg" x="14" y="210">• credit_score | credit_band</text>
+    <text class="col-reg" x="14" y="230">• activity_status_label | has_credit_card</text>
+    <text class="col-reg" x="14" y="250">• acquisition_jalali | branch_id</text>
+  </g>
+
+  <!-- TABLE 2: fact_snapshot (Center Top) -->
+  <g transform="translate(455, 110)">
+    <rect class="fact-box" x="0" y="0" width="290" height="295"/>
+    <rect class="fact-hdr" x="0" y="0" width="290" height="46"/>
+    <text class="tbl-title" x="145" y="22" text-anchor="middle">fact_snapshot (فکت اسنپ‌شات مشتری)</text>
+    <text class="tbl-sub" x="145" y="39" text-anchor="middle">۱۰٬۰۰۰ ردیف | اسنپ‌شات ۱۴۰۳/۱۲/۲۹</text>
+    <text class="col-pk" x="14" y="68">🔑 PK: snapshot_id (1..10,000)</text>
+    <text class="col-fk" x="14" y="90">🔗 FK: customer_id → dim_customer</text>
+    <text class="col-fk" x="14" y="110">🔗 FK: branch_id → dim_branch</text>
+    <text class="col-fk" x="14" y="130">🔗 FK: snapshot_date_jalali → dim_date</text>
+    <text class="col-fk" x="14" y="150">🔗 FK: acquisition_jalali → dim_date (نقش)</text>
+    <text class="col-reg" x="14" y="174">• balance_irr (Balance × ۲۵۰٬۰۰۰)</text>
+    <text class="col-reg" x="14" y="194">• estimated_salary_irr (× ۲۵۰٬۰۰۰)</text>
+    <text class="col-reg" x="14" y="214">• credit_score | age | tenure</text>
+    <text class="col-reg" x="14" y="234">• num_of_products (۱ تا ۴ محصول)</text>
+    <text class="col-reg" x="14" y="254">• is_active_member | has_cr_card | is_zero_balance</text>
+    <text class="col-reg" x="14" y="274">• exited (۰=مانده، ۱=ریزش — ۲۰٫۳۷٪)</text>
+  </g>
+
+  <!-- TABLE 3: dim_date (Top Right) -->
+  <g transform="translate(870, 110)">
+    <rect class="dim-box" x="0" y="0" width="290" height="250"/>
+    <rect class="dim-hdr" x="0" y="0" width="290" height="46"/>
+    <text class="tbl-title" x="145" y="22" text-anchor="middle">dim_date (بُعد تقویم شمسی)</text>
+    <text class="tbl-sub" x="145" y="39" text-anchor="middle">۴٬۳۸۲ ردیف | پیوسته ۱۳۹۲/۰۱/۰۱ تا ۱۴۰۳/۱۲/۲۹</text>
+    <text class="col-pk" x="14" y="68">🔑 PK: date_jalali (YYYY/MM/DD)</text>
+    <text class="col-pk" x="14" y="90">🔑 AK: date_key (YYYYMMDD)</text>
+    <text class="col-reg" x="14" y="112">• date_gregorian (YYYY-MM-DD)</text>
+    <text class="col-reg" x="14" y="132">• jalali_year (۱۳۹۲..۱۴۰۳)</text>
+    <text class="col-reg" x="14" y="152">• jalali_quarter | jalali_quarter_name</text>
+    <text class="col-reg" x="14" y="172">• jalali_month | jalali_month_name</text>
+    <text class="col-reg" x="14" y="192">• jalali_year_month (YYYY/MM)</text>
+    <text class="col-reg" x="14" y="212">• day_of_week_num | day_of_week_name</text>
+    <text class="col-reg" x="14" y="232">• is_weekend (پنجشنبه/جمعه)</text>
+  </g>
+
+  <!-- TABLE 4: dim_branch (Bottom Left) -->
+  <g transform="translate(40, 435)">
+    <rect class="dim-box" x="0" y="0" width="290" height="215"/>
+    <rect class="dim-hdr" x="0" y="0" width="290" height="46"/>
+    <text class="tbl-title" x="145" y="22" text-anchor="middle">dim_branch (بُعد شعب بانک آریا)</text>
+    <text class="tbl-sub" x="145" y="39" text-anchor="middle">۷ شعبه ساختگی در ۳ استان</text>
+    <text class="col-pk" x="14" y="68">🔑 PK: branch_id (BR-101 .. BR-302)</text>
+    <text class="col-reg" x="14" y="90">• branch_code (101..302)</text>
+    <text class="col-reg" x="14" y="112">• branch_name (شعبه مرکزی تهران و...)</text>
+    <text class="col-reg" x="14" y="134">• province (تهران / اصفهان / خراسان رضوی)</text>
+    <text class="col-reg" x="14" y="156">• source_geography (France/Germany/Spain)</text>
+    <text class="col-reg" x="14" y="178">• city | branch_tier (ممتاز / درجه یک)</text>
+    <text class="col-reg" x="14" y="198">• region_manager (مدیریت منطقه)</text>
+  </g>
+
+  <!-- TABLE 5: fact_product_holding (Center Bottom) -->
+  <g transform="translate(455, 435)">
+    <rect class="fact-box" x="0" y="0" width="290" height="235"/>
+    <rect class="fact-hdr" x="0" y="0" width="290" height="46"/>
+    <text class="tbl-title" x="145" y="22" text-anchor="middle">fact_product_holding (فکت محصولات)</text>
+    <text class="tbl-sub" x="145" y="39" text-anchor="middle">۱۵٬۳۰۲ ردیف | مشتق قطعی از NumOfProducts</text>
+    <text class="col-pk" x="14" y="68">🔑 PK: holding_id (1..15,302)</text>
+    <text class="col-fk" x="14" y="90">🔗 FK: customer_id → dim_customer</text>
+    <text class="col-fk" x="14" y="110">🔗 FK: branch_id → dim_branch</text>
+    <text class="col-fk" x="14" y="130">🔗 FK: product_id → dim_product</text>
+    <text class="col-fk" x="14" y="150">🔗 FK: opened_date_jalali → dim_date</text>
+    <text class="col-reg" x="14" y="174">• product_sequence (1..NumOfProducts)</text>
+    <text class="col-reg" x="14" y="194">• allocated_balance_irr (جمع = balance_irr)</text>
+    <text class="col-reg" x="14" y="214">• holding_status | is_synthetic_derivation=1</text>
+  </g>
+
+  <!-- TABLE 6: dim_product (Bottom Right) -->
+  <g transform="translate(870, 435)">
+    <rect class="dim-box" x="0" y="0" width="290" height="215"/>
+    <rect class="dim-hdr" x="0" y="0" width="290" height="46"/>
+    <text class="tbl-title" x="145" y="22" text-anchor="middle">dim_product (بُعد محصولات بانکی)</text>
+    <text class="tbl-sub" x="145" y="39" text-anchor="middle">۴ محصول پایه بانکی</text>
+    <text class="col-pk" x="14" y="68">🔑 PK: product_id (PRD-01 .. PRD-04)</text>
+    <text class="col-reg" x="14" y="90">• product_code (1..4)</text>
+    <text class="col-reg" x="14" y="112">• product_name (جاری، کوتاه‌مدت، اعتباری، بلندمدت)</text>
+    <text class="col-reg" x="14" y="134">• product_category (گروه محصول)</text>
+    <text class="col-reg" x="14" y="156">• is_credit_product (۰ / ۱)</text>
+    <text class="col-reg" x="14" y="178">• annual_rate_pct (نرخ سود/کارمزد نمایشی)</text>
+    <text class="col-reg" x="14" y="198">• description (شرح محصول)</text>
+  </g>
+
+  <!-- Footer / Legend -->
+  <rect class="legend-box" x="40" y="688" width="1120" height="52"/>
+  <text class="col-reg" x="1140" y="718" text-anchor="end">
+    راهنما: خطوط سبز ممتد = رابطه فعال ۱ به چند (Active 1:*) | خط‌چین آبی = رابطه غیرفعال نقش‌گذاری تقویم (Inactive Role-Playing با USERELATIONSHIP) | RLS پیشنهادی روی ستون province
+  </text>
+</svg>

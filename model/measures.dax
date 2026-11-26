@@ -1,0 +1,205 @@
+// ============================================================================
+// بانک آریا — نمای ۳۶۰ درجه مشتری و تحلیل ریزش (Customer 360° & Churn)
+// فایل اندازه‌های استاندارد DAX (جدول پیشنهادی در مدل: _Measures)
+// تاریخ مرجع اسنپ‌شات: ۱۴۰۳/۱۲/۲۹
+//
+// یادداشت صداقت فنی:
+// این فرمول‌های DAX مطابق الگوی استاندارد Power BI / VertiPaq روی مدل ستاره‌ای
+// (dim_date, dim_customer, dim_branch, dim_product, fact_snapshot, fact_product_holding)
+// نوشته شده‌اند؛ اما به دلیل تولید پروژه در محیط لینوکس (فاقد فایل .pbix)،
+// اجرای مستقیم آن‌ها در موتور VertiPaq تست نشده و معادل پایتونی آن‌ها در تست‌های
+// خودکار (tests/test_data_quality.py) و اپ پیش‌نمایش (app.py) راستی‌آزمایی شده است.
+// ============================================================================
+
+
+// ----------------------------------------------------------------------------
+// ۱. شاخص‌های پایه شمارش مشتریان و ریزش (Customer & Churn Core KPIs)
+// ----------------------------------------------------------------------------
+
+Total Customers =
+COUNTROWS ( 'fact_snapshot' )
+
+Churned Customers =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[exited] = 1
+)
+
+Retained Customers =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[exited] = 0
+)
+
+Churn Rate =
+DIVIDE ( [Churned Customers], [Total Customers], 0 )
+
+Retention Rate =
+DIVIDE ( [Retained Customers], [Total Customers], 0 )
+
+
+// ----------------------------------------------------------------------------
+// ۲. شاخص‌های مانده سپرده و حقوق تخمینی (Deposits & Balance — مقیاس نمایشی ریال)
+// توجه: مبالغ ریالی حاصل مقیاس نمایشی ×۲۵۰٬۰۰۰ روی مقادیر منبع هستند.
+// ----------------------------------------------------------------------------
+
+Total Balance (IRR) =
+SUM ( 'fact_snapshot'[balance_irr] )
+
+Total Balance (Billion IRR) =
+DIVIDE ( [Total Balance (IRR)], 1000000000, 0 )
+
+Average Balance per Customer (IRR) =
+AVERAGE ( 'fact_snapshot'[balance_irr] )
+
+Average Balance (Non-Zero Customers IRR) =
+CALCULATE (
+    AVERAGE ( 'fact_snapshot'[balance_irr] ),
+    'fact_snapshot'[is_zero_balance] = 0
+)
+
+Balance at Risk (Churned Balance IRR) =
+CALCULATE (
+    [Total Balance (IRR)],
+    'fact_snapshot'[exited] = 1
+)
+
+Balance at Risk Share =
+DIVIDE ( [Balance at Risk (Churned Balance IRR)], [Total Balance (IRR)], 0 )
+
+Zero Balance Customers =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[is_zero_balance] = 1
+)
+
+Zero Balance Share =
+DIVIDE ( [Zero Balance Customers], [Total Customers], 0 )
+
+Average Estimated Salary (IRR) =
+AVERAGE ( 'fact_snapshot'[estimated_salary_irr] )
+
+
+// ----------------------------------------------------------------------------
+// ۳. شاخص‌های فعالیت، کارت اعتباری و امتیاز اعتباری (Engagement & Credit)
+// ----------------------------------------------------------------------------
+
+Active Customers =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[is_active_member] = 1
+)
+
+Inactive Customers =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[is_active_member] = 0
+)
+
+Active Member Share =
+DIVIDE ( [Active Customers], [Total Customers], 0 )
+
+Churn Rate (Active Members) =
+CALCULATE (
+    [Churn Rate],
+    'fact_snapshot'[is_active_member] = 1
+)
+
+Churn Rate (Inactive Members) =
+CALCULATE (
+    [Churn Rate],
+    'fact_snapshot'[is_active_member] = 0
+)
+
+Credit Card Holders =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[has_cr_card] = 1
+)
+
+Credit Card Penetration =
+DIVIDE ( [Credit Card Holders], [Total Customers], 0 )
+
+Average Credit Score =
+AVERAGE ( 'fact_snapshot'[credit_score] )
+
+Average Customer Age =
+AVERAGE ( 'fact_snapshot'[age] )
+
+Average Tenure (Years) =
+AVERAGE ( 'fact_snapshot'[tenure] )
+
+
+// ----------------------------------------------------------------------------
+// ۴. شاخص‌های سبد محصولات و فروش متقاطع (Product Portfolio & Cross-Sell)
+// ----------------------------------------------------------------------------
+
+Average Products per Customer =
+AVERAGE ( 'fact_snapshot'[num_of_products] )
+
+Total Product Holdings =
+COUNTROWS ( 'fact_product_holding' )
+
+Multi-Product Customers (2+ Products) =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[num_of_products] >= 2
+)
+
+Multi-Product Share =
+DIVIDE ( [Multi-Product Customers (2+ Products)], [Total Customers], 0 )
+
+High-Risk 3+ Product Customers =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    'fact_snapshot'[num_of_products] >= 3
+)
+
+Allocated Product Balance (IRR) =
+SUM ( 'fact_product_holding'[allocated_balance_irr] )
+
+
+// ----------------------------------------------------------------------------
+// ۵. شاخص‌های نقش‌گذاری زمان (Role-Playing Date Measures با USERELATIONSHIP)
+// ----------------------------------------------------------------------------
+
+Customers Acquired by Period =
+CALCULATE (
+    COUNTROWS ( 'fact_snapshot' ),
+    USERELATIONSHIP ( 'dim_date'[date_jalali], 'fact_snapshot'[acquisition_jalali] )
+)
+
+Churned Customers by Acquisition Cohort =
+CALCULATE (
+    [Churned Customers],
+    USERELATIONSHIP ( 'dim_date'[date_jalali], 'fact_snapshot'[acquisition_jalali] )
+)
+
+Cohort Churn Rate =
+DIVIDE (
+    [Churned Customers by Acquisition Cohort],
+    [Customers Acquired by Period],
+    0
+)
+
+
+// ----------------------------------------------------------------------------
+// ۶. شاخص‌های مقایسه‌ای استانی و کل بانک (Benchmarking vs All Bank)
+// ----------------------------------------------------------------------------
+
+Bank Overall Churn Rate (All Selected) =
+CALCULATE (
+    [Churn Rate],
+    ALL ( 'dim_customer'[province] ),
+    ALL ( 'dim_branch' )
+)
+
+Churn Rate Variance vs Bank Avg =
+[Churn Rate] - [Bank Overall Churn Rate (All Selected)]
+
+Customer Share of Total Bank =
+DIVIDE (
+    [Total Customers],
+    CALCULATE ( [Total Customers], ALL ( 'dim_customer' ), ALL ( 'dim_branch' ) ),
+    0
+)

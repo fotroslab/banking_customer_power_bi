@@ -1,0 +1,85 @@
+{
+  "name": "Bank Aria Fa",
+  "dataColors": [
+    "#0b6e4f",
+    "#d4a017",
+    "#2b7a78",
+    "#c93b2b",
+    "#1e8449",
+    "#6c8ebf",
+    "#8e6c46",
+    "#4a6b5d"
+  ],
+  "background": "#f7faf7",
+  "foreground": "#132a21",
+  "tableAccent": "#0b6e4f",
+  "good": "#0b6e4f",
+  "neutral": "#d4a017",
+  "bad": "#c93b2b",
+  "maximum": "#0b6e4f",
+  "center": "#d4a017",
+  "minimum": "#c93b2b",
+  "null": "#95a5a6",
+  "textClasses": {
+    "callout": {
+      "fontSize": 26,
+      "fontFace": "Vazirmatn FD, Vazirmatn, Segoe UI",
+      "color": "#0b6e4f"
+    },
+    "title": {
+      "fontSize": 13,
+      "fontFace": "Vazirmatn FD, Vazirmatn, Segoe UI",
+      "color": "#074d37"
+    },
+    "header": {
+      "fontSize": 11,
+      "fontFace": "Vazirmatn FD, Vazirmatn, Segoe UI",
+      "color": "#132a21"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Vazirmatn FD, Vazirmatn, Segoe UI",
+      "color": "#2f473d"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#ffffff" } },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#d7e5dd" } },
+            "radius": 8
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": { "solid": { "color": "#f7faf7" } },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": { "solid": { "color": "#eef5f0" } }
+          }
+        ]
+      }
+    }
+  }
+}

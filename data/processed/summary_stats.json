@@ -1,0 +1,117 @@
+{
+  "project_name": "بانک آریا — نمای ۳۶۰ درجه مشتری و تحلیل ریزش",
+  "reference_date_jalali": "1403/12/29",
+  "scale_factor_irr": 250000,
+  "total_customers": 10000,
+  "churned_customers": 2037,
+  "retained_customers": 7963,
+  "churn_rate": 0.2037,
+  "churn_rate_pct": 20.37,
+  "retention_rate_pct": 79.63,
+  "total_balance_irr": 191214723220000,
+  "avg_balance_irr": 19121472322.0,
+  "total_estimated_salary_irr": 250225599702500,
+  "avg_estimated_salary_irr": 25022559970.25,
+  "avg_credit_score": 650.53,
+  "avg_age": 38.92,
+  "avg_tenure": 5.01,
+  "avg_products_per_customer": 1.5302,
+  "total_product_holdings": 15302,
+  "active_member_share": 0.5151,
+  "active_member_share_pct": 51.51,
+  "credit_card_holder_share_pct": 70.55,
+  "zero_balance_count": 3617,
+  "zero_balance_share": 0.3617,
+  "zero_balance_share_pct": 36.17,
+  "by_province": {
+    "اصفهان": {
+      "source_geography": "Germany",
+      "customer_count": 2509,
+      "churned_count": 814,
+      "churn_rate": 0.324432,
+      "churn_rate_pct": 32.44,
+      "total_balance_irr": 75100715345000,
+      "avg_balance_irr": 29932529033.48,
+      "active_rate_pct": 49.74
+    },
+    "تهران": {
+      "source_geography": "France",
+      "customer_count": 5014,
+      "churned_count": 810,
+      "churn_rate": 0.161548,
+      "churn_rate_pct": 16.15,
+      "total_balance_irr": 77833119872500,
+      "avg_balance_irr": 15523159128.94,
+      "active_rate_pct": 51.68
+    },
+    "خراسان رضوی": {
+      "source_geography": "Spain",
+      "customer_count": 2477,
+      "churned_count": 413,
+      "churn_rate": 0.166734,
+      "churn_rate_pct": 16.67,
+      "total_balance_irr": 38280888002500,
+      "avg_balance_irr": 15454536940.86,
+      "active_rate_pct": 52.97
+    }
+  },
+  "by_num_of_products": {
+    "1": {
+      "customer_count": 5084,
+      "churned_count": 1409,
+      "churn_rate": 0.277144,
+      "churn_rate_pct": 27.71,
+      "avg_balance_irr": 24637967653.42
+    },
+    "2": {
+      "customer_count": 4590,
+      "churned_count": 348,
+      "churn_rate": 0.075817,
+      "churn_rate_pct": 7.58,
+      "avg_balance_irr": 12969786453.16
+    },
+    "3": {
+      "customer_count": 266,
+      "churned_count": 220,
+      "churn_rate": 0.827068,
+      "churn_rate_pct": 82.71,
+      "avg_balance_irr": 18864582048.87
+    },
+    "4": {
+      "customer_count": 60,
+      "churned_count": 60,
+      "churn_rate": 1.0,
+      "churn_rate_pct": 100.0,
+      "avg_balance_irr": 23433283750.0
+    }
+  },
+  "by_activity_status": {
+    "غیرفعال": {
+      "is_active_member": 0,
+      "customer_count": 4849,
+      "churned_count": 1302,
+      "churn_rate": 0.268509,
+      "churn_rate_pct": 26.85
+    },
+    "فعال": {
+      "is_active_member": 1,
+      "customer_count": 5151,
+      "churned_count": 735,
+      "churn_rate": 0.142691,
+      "churn_rate_pct": 14.27
+    }
+  },
+  "row_counts": {
+    "dim_date": 4382,
+    "dim_customer": 10000,
+    "dim_branch": 7,
+    "dim_product": 4,
+    "fact_snapshot": 10000,
+    "fact_product_holding": 15302
+  },
+  "honesty_notes": {
+    "currency_scaling": "مبالغ ریالی صرفاً حاصل ضرب نمایشی ×۲۵۰٬۰۰۰ در مقادیر منبع هستند و ریال واقعی بانک نیستند.",
+    "geography_mapping": "نگاشت France→تهران، Germany→اصفهان و Spain→خراسان رضوی صرفاً برچسب‌گذاری ۱:۱ است؛ نرخ ریزش ۳۲٫۴۴٪ اصفهان ویژگی دادهٔ آلمان در منبع اصلی است، نه واقعیت اقتصادی اصفهان.",
+    "product_holding_derivation": "جدول fact_product_holding با seed ثابت از روی NumOfProducts مشتق شده است؛ زمان بازگشایی محصول در منبع وجود ندارد."
+  }
+}
